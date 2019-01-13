@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const config = require('./db/config');
 const jwt = require('jsonwebtoken');
 const userController = require('./controllers/UserController');
+const _ = require('lodash');
 require('./models/User');
 
 const app = express();
@@ -16,7 +17,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/users/:id', (req, res) => {
-    userController.findOne(req, res);
+    userController.getOne(req, res);
+});
+
+app.get('/users', (req, res) => {
+    userController.getAll(req, res);
 });
 
 app.post('/', verifyToken, (req, res) => {
@@ -34,6 +39,10 @@ app.post('/', verifyToken, (req, res) => {
 
 app.post('/users/add', (req, res) => {
    userController.add(req, res);
+});
+
+app.patch('/users/:id' , (req,res) => {
+    userController.update(req,res);
 });
 
 // app.delete('/users/remove', (req, res) => {
