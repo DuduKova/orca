@@ -12,6 +12,8 @@ usersRouter.use((req, res, next) => {
 
     usersRouter.get('/me' , authenticate, (req, res) => userController.getMe(req , res));
 
+    usersRouter.delete('/me/token' , authenticate, (req, res) => userController.logout(req , res));
+
     usersRouter.get('/:id', (req, res) => userController.getOne(req, res));
 
     usersRouter.post('/login', (req, res) => userController.login(req, res));
