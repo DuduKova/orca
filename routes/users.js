@@ -14,6 +14,8 @@ usersRouter.use((req, res, next) => {
 
     usersRouter.get('/:id', (req, res) => userController.getOne(req, res));
 
+    usersRouter.post('/login', (req, res) => userController.login(req, res));
+
     usersRouter.post('/add', (req, res) => userController.add(req, res));
 
     usersRouter.patch('/:id', (req, res) => userController.update(req, res));
