@@ -6,6 +6,7 @@ const Schema = mongoose.Schema;
 const secretKey = 'dudukovalski';
 const validator = require('validator');
 const _ = require('lodash');
+const bcrypt = require('bcryptjs');
 
 const UserSchema = new Schema({
     firstName: {type: String, required: true, max: 30, trim: true},
@@ -99,6 +100,20 @@ UserSchema.statics.findByToken = function (token) {
         'tokens.access': 'auth'
     })
 };
+
+UserSchema.pre('save', function (next) {
+    if (this.isModified('password')) {
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(this.password, salt, (err, hash) => {
+                this.password = hash;
+                next();
+            })
+        });
+
+    } else {
+        next();
+    }
+});
 
 const User = mongoose.model('User', UserSchema);
 

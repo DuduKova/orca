@@ -1,5 +1,21 @@
-// const crypto = require('crypto');
-// const {SHA256} =  require('crypto-js');
+const crypto = require('crypto');
+const {SHA256} =  require('crypto-js');
+const bcrypt = require('bcryptjs');
+
+const password = '123abc!';
+
+// bcrypt.genSalt(10, (err, salt) => {
+//    bcrypt.hash(password, salt , (err, hash) => {
+//        console.log(hash);
+//    })
+// });
+
+
+const hashed = '$2a$10$Tb1ZDnwYZ/nIfXm7mz2bzOL4haT8k7.idquwF0rzk0T6MGIE.y5cO';
+
+bcrypt.compare('123abc', hashed, (err , res)=> {
+   console.log(res);
+});
 //
 // const mes = 'dudu kovalski';
 // const hash = SHA256(mes).toString();
