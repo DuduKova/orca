@@ -1,3 +1,13 @@
-<p>
-  navbar works!
-</p>
+<div class="navbar-nav">
+  <a class="nav-item nav-link" routerLink="/">Home</a>
+  <ul *ngFor="let company of (companies$ | async)">
+    <li>
+      <a class="nav-item nav-link" (click)="selectCompany(company)">{{company.name}}</a>
+    </li>
+  </ul>
+  <a class="nav-item nav-link" (click)="logout()">Logout</a>
+</div>
+
+<div class="navbar-nav">
+  <a class="nav-item nav-link">{{(selectedCompany)?.name}}</a>
+</div>

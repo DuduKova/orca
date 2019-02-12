@@ -11,6 +11,9 @@ import { RegisterComponent } from './components/register';
 import { AlertComponent } from './components/alert';
 import { ErrorInterceptor } from './_helpers';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { CompanyDetailsComponent } from './components/company-details/company-details.component';
+import { ProductsComponent } from './components/products/products.component';
+import { ProductItemComponent } from './components/product-item/product-item.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     LoginPageComponent,
     RegisterComponent,
     AlertComponent,
-    NavbarComponent
+    NavbarComponent,
+    CompanyDetailsComponent,
+    ProductsComponent,
+    ProductItemComponent
   ],
   imports: [
     BrowserModule,

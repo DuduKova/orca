@@ -11,19 +11,19 @@ export class UserService {
     //     return this.http.get<User[]>(`localhost:3000/users`);
     // }
 
-    getById(id: number) {
-        return this.http.get(`localhost:3000/users/${id}`);
-    }
+    // getById(id: number) {
+    //     return this.http.get(`localhost:3000/users/${id}`);
+    // }
 
     register(user: User) {
-        return this.http.post(`localhost:3000/users/register`, user);
+        return this.http.post(`http://localhost:3000/users/signUp`, user);
     }
 
-    update(user: User) {
-        return this.http.put(`localhost:3000/users/${user.id}`, user);
-    }
+    // update(user: User) {
+    //     return this.http.put(`localhost:3000/users/${user.id}`, user);
+    // }
 
-    delete(id: number) {
-        return this.http.delete(`localhost:3000/users/${id}`);
-    }
+    // delete(id: number) {
+    //     return this.http.delete(`localhost:3000/users/${id}`);
+    // }
 }

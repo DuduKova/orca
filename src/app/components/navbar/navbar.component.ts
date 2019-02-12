@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {User} from "../../_models";
+import {Router} from "@angular/router";
+import {AuthenticationService} from "../../_services";
+import {CompanyService} from "../../_services/company.service";
+import {BehaviorSubject, Observable} from "rxjs";
+import {DataService} from "../../_services/data.service";
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +13,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  @Input() currentUser: User;
+  private companies$: Observable<any>;
+  public selectedCompany;
 
-  ngOnInit() {
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private companiesSearvice: CompanyService,
+    private data: DataService
+  ) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
+  ngOnInit() {
+     this.companies$ = this.companiesSearvice.getAll();
+     this.data.currentCompany.subscribe(company => this.selectedCompany = company);
+  }
+
+  selectCompany(company) {
+    this.data.changeCompany(company);
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/loginPage']);
+  }
 }
