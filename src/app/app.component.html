@@ -2,9 +2,10 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
   <app-navbar [currentUser]="currentUser"></app-navbar>
 </nav>
-
-<!-- main app container -->
-<div class="jumbotron">
+<nav class="navbar navbar-expand navbar-light bg-secondary" *ngIf="currentUser">
+<app-cart [currentUser]="currentUser"></app-cart>
+</nav>
+<div class="jumbotron min-hieght">
   <div class="container">
     <div class="row">
         <alert></alert>

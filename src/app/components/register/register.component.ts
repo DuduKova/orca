@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 
 import {AlertService, UserService, AuthenticationService} from '../../_services';
+import {CartService} from "../../_services/cart.service";
 
 @Component({templateUrl: 'register.component.html'})
 export class RegisterComponent implements OnInit {
@@ -16,7 +17,8 @@ export class RegisterComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private cartService: CartService
   ) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
@@ -54,7 +56,12 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         data => {
           this.alertService.success('Registration successful', true);
-          this.router.navigate(['/loginPage']);
+          this.router.navigate(['/loginPage']).then(() => {
+            // @ts-ignore
+            this.cartService.create(data._id);
+          }, (e) => {
+            console.log(e);
+          });
         },
         error => {
           this.alertService.error(error);

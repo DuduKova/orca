@@ -1,0 +1,18 @@
+<mat-toolbar color="default">
+  <mat-toolbar-row>
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" color="primary">
+      <i class="fa fa-shopping-cart fa-2x"></i>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #drawer mode="side" opened role="navigation">
+    <h1>My Cart</h1>
+    <mat-nav-list *ngFor="let item of (currentCart?.items)">
+      <a mat-list-item routerLink='/{{item}}'>{{item.quantity}}</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

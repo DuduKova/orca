@@ -7,7 +7,6 @@ import { User } from './_models';
 @Component({ selector: 'app-root', templateUrl: 'app.component.html' })
 export class AppComponent {
   currentUser: User;
-
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService

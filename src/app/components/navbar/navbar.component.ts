@@ -5,6 +5,7 @@ import {AuthenticationService} from "../../_services";
 import {CompanyService} from "../../_services/company.service";
 import {BehaviorSubject, Observable} from "rxjs";
 import {DataService} from "../../_services/data.service";
+import {CartService} from "../../_services/cart.service";
 
 @Component({
   selector: 'app-navbar',
@@ -16,12 +17,13 @@ export class NavbarComponent implements OnInit {
   @Input() currentUser: User;
   private companies$: Observable<any>;
   public selectedCompany;
+  private cart$: Observable<any>;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private companiesSearvice: CompanyService,
-    private data: DataService
+    private data: DataService,
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
