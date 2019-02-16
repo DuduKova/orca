@@ -22,8 +22,29 @@
           </div>
 
           <div class="col-9">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga, molestiae provident temporibus
-              sunt earum.</p>
+            <form [formGroup]="productForm">
+              <div class="form-group">
+                <label>First Name</label>
+                <input hidden type="text" formControlName="_id" class="form-control"/>
+              </div>
+              <div class="form-group">
+                <label>Quantity</label>
+                <input #quantity type="number" formControlName="quantity" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.quantity.errors }" />
+                <div *ngIf="submitted && f.quantity.errors" class="invalid-feedback">
+                  <div *ngIf="f.quantity.errors.required">Have to be al least one</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Total price</label>
+                <input readonly type="number" value="{{selectedProduct?.price * quantity.value}}" formControlName="price" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.price.errors }" />
+                <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+                  <div *ngIf="f.price.errors.required">ERROR</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button class="btn btn-primary" (click)="onSubmit()">Add to Cart</button>
+              </div>
+            </form>
             <h2>
               <span class="badge">v52gs1</span>
             </h2>

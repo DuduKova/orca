@@ -1,5 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {DataService} from "../../_services/data.service";
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {ProductService} from "../../_services/product.service";
+import {CompanyService} from "../../_services/company.service";
+import {Company, Product} from "../../_models";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-products',
@@ -7,18 +10,19 @@ import {DataService} from "../../_services/data.service";
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit {
-  public selectedCompany;
+  public selectedCompany: Company;
+  public selectedProduct: Product;
 
   @ViewChild('productModal') proModal;
 
-  constructor(private data: DataService) { }
+  constructor(private companiesSearvice: CompanyService, private productService: ProductService , private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.data.currentCompany.subscribe(company => this.selectedCompany = company);
+    this.companiesSearvice.currentCompany.subscribe(company => this.selectedCompany = company);
+    this.productService.currentProduct.subscribe(product => this.selectedProduct = product);
   }
 
-  showProductModal(product) {
-    console.log(product);
+  showProductModal() {
     this.proModal.show();
   }
 
@@ -38,7 +42,7 @@ export class ProductsComponent implements OnInit {
   }
 
   onOpen(event: any) {
-    console.log(event);
+    console.log(this.selectedProduct._id + ' from products');
   }
 
 }

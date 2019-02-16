@@ -1,10 +1,10 @@
 <div class="card-deck">
   <app-product-item *ngFor="let product of (selectedCompany)?.products" class="card"
-                    [product]="product" (productModalShow)="showProductModal(product)"></app-product-item>
+                    [product]="product" (productModalShow)="showProductModal()"></app-product-item>
 </div>
 
 <app-product-modal mdbModal #productModal="mdbModal" class="modal fade left" tabindex="-1" role="dialog"
                    aria-labelledby="myModalLabel" aria-hidden="true"
                    (closed)="onClosed($event)" (close)="onClose($event)" (opened)="onOpened($event)"
-                   (open)="onOpen($event)" (closePM)="closeProductModal()">
+                   (open)="onOpen($event)" (closePM)="closeProductModal()" [selectedProduct]="selectedProduct">
 </app-product-modal>

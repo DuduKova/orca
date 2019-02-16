@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs';
 import {User} from '../../_models';
 import {UserService, AuthenticationService} from '../../_services';
 import {DataService} from "../../_services/data.service";
+import {CompanyService} from "../../_services/company.service";
 
 @Component({templateUrl: 'home.component.html'})
 export class HomeComponent implements OnInit, OnDestroy {
@@ -14,7 +15,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private data: DataService
+    private companiesSearvice: CompanyService
   ) {
     this.currentUserSubscription = this.authenticationService.currentUser.subscribe(user => {
       this.currentUser = user;
@@ -23,7 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.loadAllUsers();
-    this.data.currentCompany.subscribe(company => this.selectedCompany = company);
+    this.companiesSearvice.currentCompany.subscribe(company => this.selectedCompany = company);
 
   }
 

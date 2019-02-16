@@ -13,7 +13,7 @@ import {DataService} from "../../_services/data.service";
 })
 export class NavbarComponent implements OnInit {
   currentUser: User;
-  private selectedCompany: Company;
+  selectedCompany: Company;
   currentCompanies: Company[];
   currentCompaniesSubscription: Subscription;
 
@@ -21,21 +21,20 @@ export class NavbarComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private companiesSearvice: CompanyService,
-    private data: DataService,
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit() {
     this.companiesSearvice.getAll().subscribe();
-    this.currentCompaniesSubscription = this.companiesSearvice.currentCompany.subscribe(companies => {
+    this.currentCompaniesSubscription = this.companiesSearvice.companies.subscribe(companies => {
       this.currentCompanies = companies;
     });
-    this.data.currentCompany.subscribe(company => this.selectedCompany = company);
+    this.companiesSearvice.currentCompany.subscribe(company => this.selectedCompany = company);
   }
 
   selectCompany(company) {
-    this.data.changeCompany(company);
+    this.companiesSearvice.changeCompany(company);
   }
 
   logout() {
