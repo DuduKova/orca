@@ -6,4 +6,12 @@
   lastName: string;
   city: string;
   street: string;
+  tokens: [{
+    access: {
+
+  },
+    token: {
+
+    }
+  }];
 }

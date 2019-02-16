@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
   ) {
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
-      this.router.navigate(['/']);
+      this.router.navigate(['']);
     }
   }
 
@@ -56,12 +56,9 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         data => {
           this.alertService.success('Registration successful', true);
-          this.router.navigate(['/loginPage']).then(() => {
-            // @ts-ignore
-            this.cartService.create(data._id);
-          }, (e) => {
-            console.log(e);
-          });
+          // @ts-ignore
+          this.cartService.create(data._id);
+          this.router.navigate(['login']);
         },
         error => {
           this.alertService.error(error);

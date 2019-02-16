@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DataService} from "../../_services/data.service";
 import {CartService} from "../../_services/cart.service";
-import {Observable, Subscription} from "rxjs";
-import {Cart} from "../../_models";
+import {Subscription} from "rxjs";
+import {Cart, User} from "../../_models";
+import {AuthenticationService} from "../../_services";
 
 @Component({
   selector: 'app-cart',
@@ -10,18 +11,18 @@ import {Cart} from "../../_models";
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-  // public cart;
-  // private cart$: Observable<Cart>;
   currentCart: Cart;
   currentCartSubscription: Subscription;
-  @Input() currentUser;
+  currentUser: User;
 
-  constructor(private data: DataService, private cartService: CartService) {}
+  constructor(private data: DataService, private cartService: CartService, private authenticationService: AuthenticationService,) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+
+  }
 
   ngOnInit() {
-    // this.cart$ = this.cartService.getOne(this.currentUser._id);
-    // this.data.getCart(this.cart$);
-   // this.data.currentCart.subscribe(cart => this.cart = cart);
+    // @ts-ignore
+    this.cartService.getOne(this.currentUser._id).subscribe();
     this.currentCartSubscription = this.cartService.currentCart.subscribe(cart => {
       this.currentCart = cart;
     });

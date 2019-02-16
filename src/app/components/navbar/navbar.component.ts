@@ -1,11 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from "../../_models";
+import {Company, User} from "../../_models";
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../_services";
 import {CompanyService} from "../../_services/company.service";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Subscription} from "rxjs";
 import {DataService} from "../../_services/data.service";
-import {CartService} from "../../_services/cart.service";
 
 @Component({
   selector: 'app-navbar',
@@ -13,11 +12,10 @@ import {CartService} from "../../_services/cart.service";
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
-  @Input() currentUser: User;
-  private companies$: Observable<any>;
-  public selectedCompany;
-  private cart$: Observable<any>;
+  currentUser: User;
+  private selectedCompany: Company;
+  currentCompanies: Company[];
+  currentCompaniesSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -29,8 +27,11 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-     this.companies$ = this.companiesSearvice.getAll();
-     this.data.currentCompany.subscribe(company => this.selectedCompany = company);
+    this.companiesSearvice.getAll().subscribe();
+    this.currentCompaniesSubscription = this.companiesSearvice.currentCompany.subscribe(companies => {
+      this.currentCompanies = companies;
+    });
+    this.data.currentCompany.subscribe(company => this.selectedCompany = company);
   }
 
   selectCompany(company) {
@@ -39,6 +40,6 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
-    this.router.navigate(['/loginPage']);
+    this.router.navigate(['login']);
   }
 }

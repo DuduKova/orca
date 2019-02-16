@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-product-item',
@@ -7,9 +7,13 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class ProductItemComponent implements OnInit {
 @Input() private product;
+@Output() productModalShow = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
   }
 
+  show(product) {
+    this.productModalShow.emit(product);
+  }
 }
