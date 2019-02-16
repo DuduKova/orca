@@ -6,8 +6,8 @@ const Cart = require('./Cart');
 const OrderSchema = new Schema({
     cartId: {type: Schema.Types.ObjectId, ref: 'Cart', required: true , unique: true},
     totalPrice: {type: Number, required: true },
-    city: {type: String, required: true},
-    street: {type: String , required: true},
+    city: {type: String, required: true , lowercase: true},
+    street: {type: String , required: true , lowercase: true},
     dateToDeliver: {type: String, required: true },
     dateOfOrder: {type: String, required: true},
     creditCard4digit: {type: String, required: true }

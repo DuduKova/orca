@@ -52,6 +52,7 @@ class ProductController {
                 name: req.body.name,
                 price: req.body.price,
                 image: req.body.image,
+                description: req.body.description
             };
 
             company.products.push(newProduct);
@@ -66,7 +67,7 @@ class ProductController {
     static update(req, res) {
         const id = req.params.id;
         const pid = req.params.pid;
-        const body = _.pick(req.body, ['name', 'price', 'image']);
+        const body = _.pick(req.body, ['name', 'price', 'image','description']);
 
         if (!ObjectId.isValid(id)) {
             return res.status(404).send();

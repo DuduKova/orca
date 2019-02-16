@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const ProductSchema = require('./Product');
 
 const CompanySchema = new Schema({
-    name: {type: String, required: true , unique: true},
+    name: {type: String, required: true , unique: true , lowercase: true},
     bio: {type: String, required: true },
     logo: {type: String, required: true},
     products: [ProductSchema]

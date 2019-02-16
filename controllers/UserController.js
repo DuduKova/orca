@@ -3,8 +3,7 @@ const User = require('./../models/User');
 const _ = require('lodash');
 
 class UserController {
-    constructor() {
-    };
+    constructor() {};
 
     static getMe(req, res) {
         res.send(req.user);
@@ -13,14 +12,10 @@ class UserController {
     static getOne(req, res) {
         const id = req.params.id;
 
-        if (!ObjectId.isValid(id)) {
-            return res.status(404).send();
-        }
+        if (!ObjectId.isValid(id)) res.status(404).send();
 
         User.findById(id).then((result) => {
-            if (!result) {
-                return res.status(404).send();
-            }
+            if (!result) res.status(404).send();
             res.send(result);
         }).catch((e) => {
             res.status(400).send(e);
@@ -29,20 +24,16 @@ class UserController {
 
     static getAll(req, res) {
         User.find({}, (err, users) => {
-            if (err) {
-                return res.send(err);
-            }
+            if (err) res.send(err);
             return res.send(users);
         })
     };
 
-    static add(req, res) {
+    static signUp(req, res) {
         const newUser = new User(req.body);
 
         newUser.save().then(() => {
-            return newUser.generateAuthToken();
-        }).then((token) => {
-            res.header('x-auth', token).send(newUser);
+            return res.send(newUser);
         }).catch((e) => {
             res.status(400).send(e);
         })
@@ -53,15 +44,16 @@ class UserController {
         User.findByCredentials(body.email, body.password).then((user) => {
             return user.generateAuthToken().then((token) => {
                 res.header('x-auth', token).send(user);
-            })
+            });
         }).catch((e) => {
             res.status(400).send();
         })
     };
 
     static logout(req, res) {
+        console.log('log out from server');
         req.user.removeToken(req.token).then(() => {
-            res.status(200).send();
+            res.status(200).send(res);
         } , () => {
             res.status(400).send();
         });

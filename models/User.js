@@ -1,6 +1,5 @@
 const mongoose = require('../db/mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
-const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 const secretKey = 'dudukovalski';
@@ -9,8 +8,8 @@ const _ = require('lodash');
 const bcrypt = require('bcryptjs');
 
 const UserSchema = new Schema({
-    firstName: {type: String, required: true, max: 30, trim: true},
-    lastName: {type: String, required: true, max: 30, trim: true},
+    firstName: {type: String, required: true, max: 30, trim: true , lowercase: true},
+    lastName: {type: String, required: true, max: 30, trim: true , lowercase: true},
     email: {
         type: String,
         lowercase: true,
@@ -34,8 +33,8 @@ const UserSchema = new Schema({
             required: true
         }
     }],
-    city: {type: String, trim: true, required: true},
-    street: {type: String, trim: true, required: true},
+    city: {type: String, trim: true, required: true , lowercase: true},
+    street: {type: String, trim: true, required: true , lowercase: true},
     isAdmin: {type: Boolean, default: false, required: true}
 });
 

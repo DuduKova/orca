@@ -1,3 +1,4 @@
+const {authenticate} = require('../middleware/authenticate');
 const express = require('express');
 const ordersRouter = express.Router();
 const orderController = require('../controllers/OrderController');
@@ -11,7 +12,7 @@ ordersRouter.use((req, res, next) => {
 
     ordersRouter.get('/:id', (req, res) => orderController.getOne(req, res));
 
-    ordersRouter.post('/add', (req, res) => orderController.add(req, res));
+    ordersRouter.post('/signUp', (req, res) => orderController.add(req, res));
 
     ordersRouter.patch('/:id', (req, res) => orderController.update(req, res));
 

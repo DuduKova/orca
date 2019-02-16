@@ -5,7 +5,7 @@ const Product = require('./Product');
 
 const CartItemSchema = new Schema({
     productId: {type: Schema.Types.ObjectId, ref: 'Product'},
-    quantity: {type: String, required: true},
+    quantity: {type: Number, required: true},
     totalPrice: {type: Number, required: true}
 });
 

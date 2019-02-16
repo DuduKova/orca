@@ -12,17 +12,17 @@ usersRouter.use((req, res, next) => {
 
     usersRouter.get('/me' , authenticate, (req, res) => userController.getMe(req , res));
 
-    usersRouter.delete('/me/token' , authenticate, (req, res) => userController.logout(req , res));
-
-    usersRouter.get('/:id', (req, res) => userController.getOne(req, res));
-
     usersRouter.post('/login', (req, res) => userController.login(req, res));
 
-    usersRouter.post('/add', (req, res) => userController.add(req, res));
+    usersRouter.post('/signUp', (req, res) => userController.signUp(req, res));
 
-    usersRouter.patch('/:id', (req, res) => userController.update(req, res));
+    usersRouter.delete('/me/token' , authenticate, (req, res) => userController.logout(req , res));
 
-    usersRouter.delete('/remove/:id', (req, res) => userController.removeOne(req, res));
+    // usersRouter.get('/:id', (req, res) => userController.getOne(req, res));
+
+    usersRouter.patch('/:id', authenticate , (req, res) => userController.update(req, res));
+
+    usersRouter.delete('/remove/:id', authenticate , (req, res) => userController.removeOne(req, res));
 });
 
 module.exports = usersRouter;

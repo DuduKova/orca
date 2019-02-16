@@ -6,32 +6,30 @@ class CartController {
     constructor () {};
 
     static getOne (req, res) {
-        let id = req.params.id;
-
-        if(!ObjectId.isValid(id)) {
-            return res.status(404).send();
-        }
-
-        Cart.findById(id).then((result) => {
+        Cart.find({
+            userId: req.params.id,
+        }).then((result) => {
             if(!result) {
                 return res.status(404).send();
             }
-            res.send(result);
+            res.send(result[0]);
         }).catch((e) => {
             res.status(400).send(e);
         });
     };
 
     static getAll (req , res) {
-        Cart.find({}, (err , company) => {
+        console.log('get all');
+        Cart.find({}, (err , cart) => {
             if(err) {
                 return res.send(err);
             }
-            return res.send(company);
+            return res.send(cart);
         })
     };
 
     static add (req , res) {
+        console.log('add cart wotks');
         const newCart = new Cart({
             userId: req.body.id,
         });
@@ -44,19 +42,18 @@ class CartController {
 
     static update (req , res) {
         const id = req.params.id;
-        const body = _.pick(req.body , ['logo','bio']);
 
         if(!ObjectId.isValid(id)) {
             return res.status(404).send();
         }
         Cart.findOneAndUpdate(id, {
             $set: body
-        }, {new: true}).then((company) => {
-            if(!company) {
+        }, {new: true}).then((cart) => {
+            if(!cart) {
                 res.status(404).send();
             }
 
-            res.send({company});
+            res.send({cart});
 
         }).catch((e) => {
             res.status(404).send(e);

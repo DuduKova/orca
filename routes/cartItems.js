@@ -1,3 +1,4 @@
+const {authenticate} = require('../middleware/authenticate');
 const express = require('express');
 const CartItemsRouter = express.Router({mergeParams: true});
 
