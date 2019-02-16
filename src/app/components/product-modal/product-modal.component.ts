@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {CartItem, Product} from "../../_models";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ProductService} from "../../_services/product.service";
+import {CartService} from "../../_services/cart.service";
 
 @Component({
   selector: 'app-product-modal',
@@ -10,16 +11,16 @@ import {ProductService} from "../../_services/product.service";
 })
 export class ProductModalComponent implements OnInit , OnChanges{
 @Output() closePM = new EventEmitter();
-@Input() selectedProduct;
+@Input() selectedProduct: Product;
   productForm: FormGroup;
   cartItem: CartItem;
   submitted = false;
   private _changes: SimpleChanges;
-  constructor(private formBuilder: FormBuilder , private productService: ProductService) {
+  constructor(private formBuilder: FormBuilder , private productService: ProductService , private cartService: CartService) {
     this.productForm = this.formBuilder.group({
-      '_id': ['', [Validators.required]],
-      'quantity': ['1', [Validators.required]],
-      'price': ['', [Validators.required]]
+      'productId': ['', [Validators.required]],
+      'quantity': ['', [Validators.required]],
+      'totalPrice': ['', [Validators.required]]
     });
   }
 
@@ -27,7 +28,8 @@ export class ProductModalComponent implements OnInit , OnChanges{
     this._changes = changes;
     console.log(changes);
     if(this.selectedProduct) {
-      this.productForm.patchValue(this.selectedProduct);
+      this.productForm.setValue({'productId': this.selectedProduct._id, 'totalPrice': this.selectedProduct.price , 'quantity': 1});
+      // this.productForm.patchValue(this.selectedProduct);
       this.productForm.touched;
     } else {
       this.productForm.reset();
@@ -47,7 +49,7 @@ export class ProductModalComponent implements OnInit , OnChanges{
       return;
     }
 
-    alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.productForm.value))
+    this.cartService.addItem(this.productForm.value);
   }
 
   hide() {

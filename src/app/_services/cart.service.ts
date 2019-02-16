@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import {Cart} from "../_models";
+import {Cart, CartItem} from "../_models";
 
 @Injectable({ providedIn: 'root' })
 export class CartService {
@@ -31,4 +31,9 @@ export class CartService {
   create(id: string) {
     return this.http.post<Observable<Cart>>(`http://localhost:3000/carts/add`, {"id": id}).subscribe(cart => this.currentCart = cart);
   }
+
+  addItem(item) {
+    return this.http.post<Observable<Cart>>(`http://localhost:3000/carts/${this.currentCartValue._id}/cartitems/add`, item).subscribe(cart => this.currentCart = cart);
+  };
 }
+
