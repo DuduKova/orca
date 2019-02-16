@@ -19,7 +19,9 @@ export class ProductModalComponent implements OnInit , OnChanges{
   constructor(private formBuilder: FormBuilder , private productService: ProductService , private cartService: CartService) {
     this.productForm = this.formBuilder.group({
       'productId': ['', [Validators.required]],
-      'quantity': ['', [Validators.required]],
+      'quantity': ['', [Validators.required,Validators.minLength(1),
+        Validators.max(10),
+        Validators.pattern('^[0-9]*$')]],
       'totalPrice': ['', [Validators.required]]
     });
   }
@@ -50,6 +52,7 @@ export class ProductModalComponent implements OnInit , OnChanges{
     }
 
     this.cartService.addItem(this.productForm.value);
+    this.hide();
   }
 
   hide() {

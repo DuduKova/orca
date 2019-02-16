@@ -29,11 +29,18 @@ export class CartService {
   }
 
   create(id: string) {
-    return this.http.post<Observable<Cart>>(`http://localhost:3000/carts/add`, {"id": id}).subscribe(cart => this.currentCart = cart);
+    // @ts-ignore
+    return this.http.post<BehaviorSubject<Cart>>(`http://localhost:3000/carts/add`, {"id": id}).subscribe(cart => this.currentCartSubject.next(cart));
   }
 
   addItem(item) {
-    return this.http.post<Observable<Cart>>(`http://localhost:3000/carts/${this.currentCartValue._id}/cartitems/add`, item).subscribe(cart => this.currentCart = cart);
+    // @ts-ignore
+    return this.http.post<BehaviorSubject<Cart>>(`http://localhost:3000/carts/${this.currentCartValue._id}/cartitems/add`, item).subscribe(cart => this.currentCartSubject.next(cart));
+  };
+
+  deleteItem(pid) {
+    // @ts-ignore
+    return this.http.delete<BehaviorSubject<Cart>>(`http://localhost:3000/carts/${this.currentCartValue._id}/cartitems/remove/${pid}`).subscribe(cart => this.currentCartSubject.next(cart));
   };
 }
 

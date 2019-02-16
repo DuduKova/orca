@@ -3,13 +3,6 @@
   <app-navbar></app-navbar>
 </nav>
 <nav class="navbar navbar-expand navbar-light bg-secondary" *ngIf="currentUser">
-<app-cart></app-cart>
 </nav>
-<div class="jumbotron min-hieght">
-  <div class="container">
-    <div class="row">
-        <alert></alert>
-        <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
+<alert></alert>
+<router-outlet></router-outlet>
