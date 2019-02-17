@@ -32,6 +32,7 @@ class OrderController {
     };
 
     static add (req , res) {
+        console.log(req.body);
         const newOrder = new Order({
             cartId: req.body.cartId,
             totalPrice: req.body.totalPrice,
@@ -43,8 +44,8 @@ class OrderController {
         });
 
         newOrder.save(function (err) {
-            if (err) return console.log(err);
-            return res.send('new cart was created');
+            if (err) return res.status(400).send(err);
+            return res.send('new order was created');
         })
     };
 

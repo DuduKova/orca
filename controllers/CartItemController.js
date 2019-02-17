@@ -51,14 +51,15 @@ class CartItemController {
             const newCartItem = {
                 productId: req.body.productId,
                 quantity: req.body.quantity,
-                totalPrice: req.body.totalPrice,
+                // the total price that coming from the client is actully the price for one unit.
+                totalPrice: req.body.totalPrice * req.body.quantity,
             };
 
             cart.items.push(newCartItem);
 
             cart.save((err) => {
                 if (err) return console.log(err);
-                return res.send(newCartItem);
+                return res.send(cart);
             })
         })
     };
