@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AAAA,WAAY;EACV,KAAK,EAAE,KAAK",
-"sources": ["cart.component.scss"],
+"mappings": "",
+"sources": [],
 "names": [],
 "file": "cart.component.css"
 }

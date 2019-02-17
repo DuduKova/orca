@@ -29,18 +29,21 @@ export class CartService {
   }
 
   create(id: string) {
+    return this.http.post<BehaviorSubject<Cart>>(`http://localhost:3000/carts/add`, {"id": id})
     // @ts-ignore
-    return this.http.post<BehaviorSubject<Cart>>(`http://localhost:3000/carts/add`, {"id": id}).subscribe(cart => this.currentCartSubject.next(cart));
+      .subscribe(cart => this.currentCartSubject.next(cart));
   }
 
-  addItem(item) {
+  addItem(item: CartItem) {
+    return this.http.post<BehaviorSubject<Cart>>(`http://localhost:3000/carts/${this.currentCartValue._id}/cartitems/add`, item)
     // @ts-ignore
-    return this.http.post<BehaviorSubject<Cart>>(`http://localhost:3000/carts/${this.currentCartValue._id}/cartitems/add`, item).subscribe(cart => this.currentCartSubject.next(cart));
+      .subscribe(cart => this.currentCartSubject.next(cart));
   };
 
-  deleteItem(pid) {
+  deleteItem(pid: string) {
+    return this.http.delete<BehaviorSubject<Cart>>(`http://localhost:3000/carts/${this.currentCartValue._id}/cartitems/remove/${pid}`)
     // @ts-ignore
-    return this.http.delete<BehaviorSubject<Cart>>(`http://localhost:3000/carts/${this.currentCartValue._id}/cartitems/remove/${pid}`).subscribe(cart => this.currentCartSubject.next(cart));
+      .subscribe(cart => this.currentCartSubject.next(cart));
   };
 }
 

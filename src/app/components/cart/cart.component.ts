@@ -31,9 +31,6 @@ import {CompanyService} from "../../_services/company.service";
       transition('open => closed', [
         animate('700ms ease-in', style({transform: 'translateX(-100%)'}))
       ]),
-      transition('closed => open', [
-        animate('700ms ease-in', style({transform: 'translateX(100%)'}))
-      ]),
     ]),
   ],
   templateUrl: './cart.component.html',
@@ -68,6 +65,14 @@ export class CartComponent implements OnInit {
 
   deleteItem(pid) {
     this.cartService.deleteItem(pid)
+  }
+
+  getTotalPrice(items) {
+    let total = 0;
+    for(let i = 0; i < items.length; i++){
+      total += items[i].totalPrice;
+    }
+    return total;
   }
 }
 
