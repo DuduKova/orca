@@ -5,6 +5,7 @@ import {AuthenticationService} from "../../_services";
 import {CompanyService} from "../../_services/company.service";
 import {Subscription} from "rxjs";
 import {DataService} from "../../_services/data.service";
+import {CartService} from "../../_services/cart.service";
 
 @Component({
   selector: 'app-navbar',
@@ -16,13 +17,16 @@ export class NavbarComponent implements OnInit {
   selectedCompany: Company;
   currentCompanies: Company[];
   currentCompaniesSubscription: Subscription;
+  isOpen = false;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
     private companiesSearvice: CompanyService,
+    private cartService: CartService
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.cartService.openCart.subscribe(toggle => this.isOpen = toggle);
   }
 
   ngOnInit() {
@@ -31,6 +35,10 @@ export class NavbarComponent implements OnInit {
       this.currentCompanies = companies;
     });
     this.companiesSearvice.currentCompany.subscribe(company => this.selectedCompany = company);
+  }
+
+  toggle() {
+    this.cartService.cartToggle(!this.isOpen);
   }
 
   selectCompany(company) {

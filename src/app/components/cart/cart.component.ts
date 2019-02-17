@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {DataService} from "../../_services/data.service";
-import {CartService} from "../../_services/cart.service";
-import {Subscription} from "rxjs";
+import {CartService} from "../../_services";
 import {Cart, Company, User} from "../../_models";
-import {AuthenticationService} from "../../_services";
+import {AuthenticationService, OrderService} from "../../_services";
 import {
   trigger,
   state,
@@ -38,41 +36,37 @@ import {CompanyService} from "../../_services/company.service";
 })
 export class CartComponent implements OnInit {
   currentCart: Cart;
-  currentCartSubscription: Subscription;
   currentUser: User;
   selectedCompany: Company;
-  isOpen = true;
+  isOpen = false;
+  totalPrice = 0;
 
-  constructor(private data: DataService, private cartService: CartService,
+  constructor(private cartService: CartService,
               private authenticationService: AuthenticationService,
-              private companiesSearvice : CompanyService) {
+              private companiesSearvice : CompanyService,
+              private orderService: OrderService) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
     this.companiesSearvice.currentCompany.subscribe(company => this.selectedCompany = company);
+    this.cartService.openCart.subscribe(toggle => this.isOpen = toggle);
+    this.cartService.currentCart.subscribe(currentCart => this.currentCart = currentCart);
+    this.cartService.totalPrice.subscribe(totalPrice => this.totalPrice = totalPrice);
+  }
+
+  ngOnInit() {
+    this.cartService.getOne(this.currentUser._id).subscribe();
+    this.getTotalPrice(this.currentCart.items);
   }
 
   toggle() {
-    this.isOpen = !this.isOpen;
-  }
-
-
-  ngOnInit() {
-    // @ts-ignore
-    this.cartService.getOne(this.currentUser._id).subscribe();
-    this.currentCartSubscription = this.cartService.currentCart.subscribe(cart => {
-      this.currentCart = cart;
-    });
+    this.cartService.cartToggle(!this.isOpen);
   }
 
   deleteItem(pid) {
-    this.cartService.deleteItem(pid)
+    this.cartService.deleteItem(pid);
   }
 
   getTotalPrice(items) {
-    let total = 0;
-    for(let i = 0; i < items.length; i++){
-      total += items[i].totalPrice;
-    }
-    return total;
+    this.cartService.getTotalPrice(items);
   }
 }
 

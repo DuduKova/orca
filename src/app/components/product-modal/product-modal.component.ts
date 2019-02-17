@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {CartItem, Product} from "../../_models";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ProductService} from "../../_services/product.service";
-import {CartService} from "../../_services/cart.service";
+import {ProductService} from "../../_services";
+import {CartService} from "../../_services";
 
 @Component({
   selector: 'app-product-modal',
@@ -16,7 +16,9 @@ export class ProductModalComponent implements OnInit , OnChanges{
   cartItem: CartItem;
   submitted = false;
   private _changes: SimpleChanges;
-  constructor(private formBuilder: FormBuilder , private productService: ProductService , private cartService: CartService) {
+  constructor(private formBuilder: FormBuilder ,
+              private productService: ProductService ,
+              private cartService: CartService) {
     this.productForm = this.formBuilder.group({
       'productId': ['', [Validators.required]],
       'quantity': ['', [Validators.required,Validators.minLength(1),
@@ -28,10 +30,8 @@ export class ProductModalComponent implements OnInit , OnChanges{
 
   ngOnChanges(changes: SimpleChanges) {
     this._changes = changes;
-    console.log(changes);
     if(this.selectedProduct) {
       this.productForm.setValue({'productId': this.selectedProduct._id, 'totalPrice': this.selectedProduct.price , 'quantity': 1});
-      // this.productForm.patchValue(this.selectedProduct);
       this.productForm.touched;
     } else {
       this.productForm.reset();

@@ -5,19 +5,12 @@ import {BehaviorSubject} from 'rxjs'
   providedIn: 'root'
 })
 export class DataService {
-  private selectedCompany = new BehaviorSubject(null);
-  currentCompany = this.selectedCompany.asObservable();
-
-  private cart = new BehaviorSubject(null);
-  currentCart = this.cart.asObservable();
+  private citiesSubject = new BehaviorSubject(['Tel Aviv','Afula','Haifa','Jerusalem','Lod','Ramat Gan','Beersheba','Nazareth Illit','Holon']);
+  cities = this.citiesSubject.asObservable();
 
   constructor() { }
 
-  changeCompany(company) {
-    this.selectedCompany.next(company);
-  }
-
-  getCart(cart) {
-    this.cart.next(cart);
+  changeCities(cities) {
+    this.citiesSubject.next(cities);
   }
 }

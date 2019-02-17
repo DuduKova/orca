@@ -3,7 +3,6 @@ import {Subscription} from 'rxjs';
 
 import {User} from '../../_models';
 import {UserService, AuthenticationService} from '../../_services';
-import {DataService} from "../../_services/data.service";
 import {CompanyService} from "../../_services/company.service";
 
 @Component({templateUrl: 'home.component.html'})

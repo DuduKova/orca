@@ -4,13 +4,15 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 
 import {AlertService, UserService, AuthenticationService} from '../../_services';
-import {CartService} from "../../_services/cart.service";
+import {CartService} from "../../_services";
+import {DataService} from "../../_services/data.service";
 
 @Component({templateUrl: 'register.component.html'})
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
   submitted = false;
+  cities: string[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -18,8 +20,10 @@ export class RegisterComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private userService: UserService,
     private alertService: AlertService,
-    private cartService: CartService
+    private cartService: CartService,
+    private dataService: DataService
   ) {
+    this.dataService.cities.subscribe(x => this.cities = x);
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['']);

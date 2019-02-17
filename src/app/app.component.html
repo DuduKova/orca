@@ -1,8 +1,7 @@
 <!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+<nav class="navbar navbar-expand-lg navbar-dark indigo" *ngIf="currentUser">
   <app-navbar></app-navbar>
 </nav>
-<nav class="navbar navbar-expand navbar-light bg-secondary" *ngIf="currentUser">
-</nav>
+<app-cart class="float-left" *ngIf="currentUser"></app-cart>
 <alert></alert>
 <router-outlet></router-outlet>

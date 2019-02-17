@@ -3,10 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { AlertService, AuthenticationService } from '../../_services';
+import {AlertService, AuthenticationService, CartService} from '../../_services';
+import {Cart} from "../../_models";
 
 @Component({templateUrl: 'login-page.component.html'})
 export class LoginPageComponent implements OnInit {
+  currentCart: Cart;
   loginForm: FormGroup;
   loading = false;
   submitted = false;
@@ -17,8 +19,10 @@ export class LoginPageComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private cartService: CartService
   ) {
+    this.cartService.currentCart.subscribe(currentCart => this.currentCart = currentCart);
     // redirect to home if already logged in
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);

@@ -4,6 +4,9 @@ import { ReactiveFormsModule }    from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { JwtModule } from '@auth0/angular-jwt';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,7 +28,6 @@ import {MatCheckboxModule} from '@angular/material';
 import {MatButtonModule} from '@angular/material';
 import {MatInputModule} from '@angular/material/input';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
@@ -52,6 +54,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ProductModalComponent } from './components/product-modal/product-modal.component';
+import { OrderFormComponent } from './components/order-form/order-form.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -69,7 +72,8 @@ export function tokenGetter() {
     ProductsComponent,
     ProductItemComponent,
     CartComponent,
-    ProductModalComponent
+    ProductModalComponent,
+    OrderFormComponent
   ],
   imports: [
     BrowserModule,
@@ -78,13 +82,11 @@ export function tokenGetter() {
     HttpClientModule,
     BrowserAnimationsModule,
     BrowserModule,
-    BrowserAnimationsModule,
     MatCheckboxModule,
     MatCheckboxModule,
     MatButtonModule,
     MatInputModule,
     MatAutocompleteModule,
-    MatDatepickerModule,
     MatFormFieldModule,
     MatRadioModule,
     MatSelectModule,
@@ -110,6 +112,9 @@ export function tokenGetter() {
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    OwlMomentDateTimeModule,
     MDBBootstrapModule.forRoot(),
     JwtModule.forRoot({
       config: {
@@ -120,6 +125,7 @@ export function tokenGetter() {
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: OWL_DATE_TIME_LOCALE, useValue: 'fr'},
   ],
   bootstrap: [AppComponent]
 })
