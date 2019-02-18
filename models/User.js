@@ -52,7 +52,7 @@ UserSchema.methods.generateAuthToken = function () {
 
 UserSchema.methods.toJSON = function () {
     const userObject = this.toObject();
-    return _.pick(userObject, ['_id', 'email', 'firstName', 'lastName', 'city', 'street']);
+    return _.pick(userObject, ['_id', 'email', 'firstName', 'lastName', 'city', 'street','isAdmin']);
 };
 
 UserSchema.methods.removeToken = function (token) {

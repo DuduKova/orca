@@ -70,7 +70,7 @@ class CartController {
             if(!result) {
                 return res.status(404).send();
             }
-            res.send(result);
+            res.send(null);
         }).catch((e) => {
             res.status(400).send(e);
         });

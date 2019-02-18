@@ -48,6 +48,8 @@ class ProductController {
             if (!company) {
                 return res.status(404).send();
             }
+
+
             const newProduct = {
                 name: req.body.name,
                 price: req.body.price,
@@ -59,7 +61,7 @@ class ProductController {
 
             company.save((err) => {
                 if (err) return console.log(err);
-                return res.send(newProduct);
+                return res.send(company);
             })
         })
     };

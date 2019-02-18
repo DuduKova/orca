@@ -51,7 +51,6 @@ class UserController {
     };
 
     static logout(req, res) {
-        console.log('log out from server');
         req.user.removeToken(req.token).then(() => {
             res.status(200).send(res);
         } , () => {
