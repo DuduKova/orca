@@ -81,7 +81,7 @@ class ProductController {
             if(!product) return res.status(404).send();
             product.set(body);
             company.save();
-            res.send(product);
+            res.send(company);
         })
     };
 

@@ -166,6 +166,3 @@ const data = [
     }
 
 ];
-
-// userId: {type: Schema.Types.ObjectId, ref: 'User', required: true},
-// items: [CartItem]
