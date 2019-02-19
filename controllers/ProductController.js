@@ -40,15 +40,12 @@ class ProductController {
         })
     };
 
-
-
     static add(req, res) {
         const id = req.params.id;
         Company.findById(id, (err, company) => {
             if (!company) {
                 return res.status(404).send();
             }
-
 
             const newProduct = {
                 name: req.body.name,

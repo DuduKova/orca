@@ -18,7 +18,7 @@ let storage = multer.diskStorage({
         cb(null, DIR);
     },
     filename: (req, file, cb) => {
-        cb(null, file.fieldname + '-' + Date.now() + '.' + path.extname(file.originalname));
+        cb(null, file.originalname);
     }
 });
 let upload = multer({storage: storage});
@@ -50,15 +50,9 @@ app.post('/api/upload',upload.single('photo'), function (req, res) {
 
     } else {
         console.log('file received');
-        return res.send({
-            success: true
-        })
+        return res.status(200).send('ok');
     }
 });
-
-// app.get('*' , (req , res) => {
-//     res.redirect('localhost:3000/users/login');
-// });
 
 app.listen(config.app.port, () => {
     console.log(`Server started on port: ${config.app.port}`);
